@@ -12,7 +12,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.app.api.Api;
 import uca.app.models.TweetModel;
+import uca.app.ui.activities.SignInActivity;
 import uca.app.ui.activities.SignUpActivity;
+import uca.app.utils.SessionUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,13 +25,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getData();
-        setData("Paulo McNally");
+        //getData();
+        //setData("Paulo McNally");
 
-        Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-        startActivity(intent);
+        if(!SessionUtil.isActive()){
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+            startActivity(intent);
+        }
 
-    }
+    }//fin del metodo
 
     private void setData(String text) {
         TweetModel tweetModel = new TweetModel();
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        Call<List<TweetModel>> call = Api.instance().getTweets();
+        /*Call<List<TweetModel>> call = Api.instance().getTweets();
         call.enqueue(new Callback<List<TweetModel>>() {
             @Override
             public void onResponse(Call<List<TweetModel>> call, Response<List<TweetModel>> response) {
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<List<TweetModel>> call, Throwable throwable) {
                 Log.e(TAG, throwable.getMessage());
             }
-        });
+        });*/
 
-    }
-}
+    }//fin del metodo
+}//fin de la
