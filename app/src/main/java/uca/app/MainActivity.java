@@ -7,6 +7,9 @@ import android.util.Log;
 
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         //getData();
         //setData("Paulo McNally");
+        updateTweet();
 
         if(!SessionUtil.isActive()){
             Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
@@ -79,4 +83,22 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
     }//fin del metodo
+
+    private void updateTweet(){
+        TweetModel tweetModel = new TweetModel();
+        tweetModel.setText("Mi nuevo LG Tweet");
+        Call<TweetModel> call = Api.instance().editTweet("1",tweetModel);
+        call.enqueue(new Callback<TweetModel>() {
+            @Override
+            public void onResponse(Call<TweetModel> call, Response<TweetModel> response) {
+                Log.i(TAG, response.toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<TweetModel> call, Throwable throwable) {
+                Log.e(TAG, throwable.getMessage());
+            }
+        });
+    }
 }//fin de la
